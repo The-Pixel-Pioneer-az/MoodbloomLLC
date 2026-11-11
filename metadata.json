@@ -1,0 +1,6 @@
+{
+  "name": "MoodBloom",
+  "description": "MoodBloom LLC Gourmet American & Mexican Street Food Truck - Mobile Ordering, Live Tracker & Rewards",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,143 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User account profile for MoodBloom food truck customers",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Authenticated user UID"
+        },
+        "name": {
+          "type": "string",
+          "description": "Customer display name"
+        },
+        "email": {
+          "type": "string",
+          "description": "Customer email address"
+        },
+        "phone": {
+          "type": "string",
+          "description": "Customer contact phone"
+        },
+        "favoriteTruckStop": {
+          "type": "string",
+          "description": "Preferred food truck location"
+        },
+        "bloomRewardPoints": {
+          "type": "integer",
+          "description": "Accumulated loyalty rewards points"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when profile was created (FieldValue.serverTimestamp())"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when profile was last updated (FieldValue.serverTimestamp())"
+        }
+      },
+      "required": ["userId", "name", "email", "createdAt"]
+    },
+    "FavoriteItem": {
+      "title": "FavoriteItem",
+      "description": "Saved favorite food truck menu item for quick reordering",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Owner user UID"
+        },
+        "menuItemId": {
+          "type": "string",
+          "description": "Menu item identifier"
+        },
+        "name": {
+          "type": "string",
+          "description": "Item name"
+        },
+        "price": {
+          "type": "number",
+          "description": "Base price"
+        },
+        "category": {
+          "type": "string",
+          "description": "Menu category name"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when favorited (FieldValue.serverTimestamp())"
+        }
+      },
+      "required": ["userId", "menuItemId", "name", "createdAt"]
+    },
+    "UserOrder": {
+      "title": "UserOrder",
+      "description": "Mobile pickup order record saved securely under customer profile",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Customer UID"
+        },
+        "orderCode": {
+          "type": "string",
+          "description": "Public order code (e.g. #MB-4092)"
+        },
+        "subtotal": {
+          "type": "number",
+          "description": "Order subtotal before tax and tip"
+        },
+        "tax": {
+          "type": "number",
+          "description": "Sales tax amount"
+        },
+        "tip": {
+          "type": "number",
+          "description": "Tip amount"
+        },
+        "total": {
+          "type": "number",
+          "description": "Final billed total"
+        },
+        "status": {
+          "type": "string",
+          "description": "Kitchen preparation status",
+          "enum": ["RECEIVED", "GRILLING", "FINISHING", "READY", "COMPLETED"]
+        },
+        "pickupLocation": {
+          "type": "string",
+          "description": "Pickup food truck stop name"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Summary of ordered items"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when placed (FieldValue.serverTimestamp())"
+        }
+      },
+      "required": ["userId", "orderCode", "total", "status", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Customer user profile documents"
+    },
+    "/users/{userId}/favorites/{favoriteId}": {
+      "schema": "FavoriteItem",
+      "description": "User's saved favorite menu dishes"
+    },
+    "/users/{userId}/orders/{orderId}": {
+      "schema": "UserOrder",
+      "description": "Customer mobile order history"
+    }
+  }
+}
